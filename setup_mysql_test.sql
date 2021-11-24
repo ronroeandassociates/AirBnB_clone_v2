@@ -1,4 +1,4 @@
--- Prepares a MySQL server for the hbnb project.
+-- Prepares a grey poupon MySQL server for the hbnb project.
 CREATE DATABASE IF NOT EXISTS `hbnb_test_db`;
 
 USE `hbnb_test_db`;

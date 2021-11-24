@@ -1,4 +1,4 @@
---  script that prepares a MySQL server for the project:
+--  add a script that prepares a MySQL server for the project:
 CREATE DATABASE IF NOT EXISTS `hbnb_dev_db`;
 
 USE `hbnb_dev_db`;
