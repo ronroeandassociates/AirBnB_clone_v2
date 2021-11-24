@@ -127,11 +127,11 @@ def escQuotes(str):
                 return False
     return True
 
-    def emptyline(self):
+def emptyline(self):
         """ Overrides the emptyline method of CMD's """
         pass
 
-    def do_create(self, args):
+def do_create(self, args):
         """ Create an object of any class"""
         if not args:
             print("** class name missing **")
@@ -178,12 +178,12 @@ def escQuotes(str):
         storage.new(newInstance)
         storage.save()
 
-    def help_create(self):
+def help_create(self):
         """ Help information for the create method """
         print("Creates a class of any type")
         print("[Usage]: create <className>\n")
 
-    def do_show(self, args):
+def do_show(self, args):
         """ Method to show an individual object """
         new = args.partition(" ")
         c_name = new[0]
@@ -211,12 +211,12 @@ def escQuotes(str):
         except KeyError:
             print("** no instance found **")
 
-    def help_show(self):
+def help_show(self):
         """ Help information for the show command """
         print("Shows an individual instance of a class")
         print("[Usage]: show <className> <objectId>\n")
 
-    def do_destroy(self, args):
+def do_destroy(self, args):
         """ Destroys a specified object """
         new = args.partition(" ")
         c_name = new[0]
@@ -244,12 +244,12 @@ def escQuotes(str):
         except KeyError:
             print("** no instance found **")
 
-    def help_destroy(self):
+def help_destroy(self):
         """ Help information for the destroy command """
         print("Destroys an individual instance of a class")
         print("[Usage]: destroy <className> <objectId>\n")
 
-    def do_all(self, args):
+def do_all(self, args):
         """ Shows all objects, or all objects of a class"""
         print_list = []
 
@@ -267,12 +267,12 @@ def escQuotes(str):
 
         print(print_list)
 
-    def help_all(self):
+def help_all(self):
         """ Help information for the all command """
         print("Shows all objects, or all of a class")
         print("[Usage]: all <className>\n")
 
-    def do_count(self, args):
+def do_count(self, args):
         """Count current number of class instances"""
         count = 0
         for k, v in storage._FileStorage__objects.items():
@@ -280,11 +280,11 @@ def escQuotes(str):
                 count += 1
         print(count)
 
-    def help_count(self):
+def help_count(self):
         """ """
         print("Usage: count <class_name>")
 
-    def do_update(self, args):
+def do_update(self, args):
         """ Updates a certain object with new info """
         c_name = c_id = att_name = att_val = kwargs = ''
 
@@ -367,10 +367,10 @@ def escQuotes(str):
 
         new_dict.save()  # save updates to file
 
-    def help_update(self):
+def help_update(self):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
 
-    if __name__ == "__main__":
+if __name__ == "__main__":
         HBNBCommand().cmdloop()
