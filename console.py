@@ -167,7 +167,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         if not c_id:
-            print("** instance id missing **")
+            print("** instances id missing **")
             return
 
         key = c_name + "." + c_id
