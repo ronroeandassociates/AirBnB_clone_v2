@@ -37,7 +37,6 @@ class HBNBCommand(cmd.Cmd):
 
     def precmd(self, line):
         """Reformat command line for advanced command syntax.
-
         Usage: <class name>.<command>([<id> [<*args> or <**kwargs>]])
         (Brackets denote optional fields in usage example.)
         """
@@ -109,73 +108,39 @@ class HBNBCommand(cmd.Cmd):
         """ Prints the help documentation for EOF """
         print("Exits the program without formatting\n")
 
-
-def checkInt(str, neg):
-    '''Checks if string is an integer'''
-    if neg == 1 and str.startswith('-'):
-        if str[1:].isnumeric():
-            return True, str
-    elif str.isnumeric():
-        return True
-
-
-def escQuotes(str):
-    '''Checks escapes quotes'''
-    for i, char in enumerate(str):
-        if char == '"':
-            if str[i - 1] != '\\':
-                return False
-    return True
-
     def emptyline(self):
-        """ Overrides the emptyline method of CMD's """
+        """ Overrides the emptyline method of CMD """
         pass
 
     def do_create(self, args):
         """ Create an object of any class"""
-        if not args:
+        # regex_str = r"(.+)=[\"]?(.+)[\"]"
+        arg_list = args.split(" ")
+        if len(arg_list) == 0:
             print("** class name missing **")
             return
-
-        classParams = args.split()
-        if classParams[0] not in HBNBCommand.classes:
+        elif arg_list[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-
-        elif len(classParams) == 1:
-            newInstance = HBNBCommand.classes[classParams[0]]()
-            print(newInstance.id)
-            storage.new(newInstance)
-            storage.save()
-
-        else:
-            newInstance = HBNBCommand.classes[classParams[0]]()
-            for params in classParams[1:]:
-                paramParse = params.split('=', 1)
-                key = paramParse[0]
-                if len(paramParse) > 1:
-                    value = paramParse[1]
-                else:
-                    continue
-
-                if len(paramParse) > 1:
-                    num = value.split('.')
-                    if checkInt(value, 1):
-                        newInstance.__dict__[key] = int(value)
-
-                    elif (len(num) > 1 and checkInt(
-                            num[0], 1) and checkInt(num[1], 0)):
-                        newInstance.__dict__[key] = float(value)
-
-                    elif value.startswith('"') and value.endswith('"'):
-                        noQuote = value[1:-1]
-
-                        if escQuotes(noQuote):
-                            noQuote = noQuote.replace('_', ' ')
-                            noQuote = noQuote.replace('\"', '"')
-                            newInstance.__dict__[key] = noQuote
-        print(newInstance.id)
-        storage.new(newInstance)
+        input_dict = {}
+        for item in arg_list[1:]:
+            key, val = item.split("=", 1)
+            if val.startswith('"') and val.endswith('"'):
+                input_dict.update(
+                    {key: val.replace("_", " ").replace('\\"', '"')[1:-1]})
+            elif "." in val:
+                try:
+                    input_dict.update({key: float(val)})
+                except Exception:
+                    pass
+            else:
+                try:
+                    input_dict.update({key: int(val)})
+                except Exception:
+                    pass
+        new_instance = HBNBCommand.classes[arg_list[0]](**input_dict)
+        storage.new(new_instance)
+        print(new_instance.id)
         storage.save()
 
     def help_create(self):
@@ -258,11 +223,11 @@ def escQuotes(str):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:
-            for k, v in storage._FileStorage__objects.items():
+            for v in storage.all().values():
                 print_list.append(str(v))
 
         print(print_list)
@@ -372,5 +337,6 @@ def escQuotes(str):
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
 
-    if __name__ == "__main__":
-        HBNBCommand().cmdloop()
+
+if __name__ == "__main__":
+    HBNBCommand().cmdloop()
