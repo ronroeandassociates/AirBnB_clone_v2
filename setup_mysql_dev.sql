@@ -1,10 +1,18 @@
--- Set ALL privileges on the database 'hbnb_dev_db' to the 'hbnb_dev' user.
--- Set SELECT privileges on 'performance_schema' to the 'hbnb_dev' user.
+--  add a script that prepares a MySQL server for the project:
+CREATE DATABASE IF NOT EXISTS `hbnb_dev_db`;
 
-CREATE DATABASE IF NOT EXISTS hbnb_dev_db:
-    DROP USER IF EXISTS 'hbnb_dev'@'localhost':
-        CREATE USER 'hbnb_dev'@'localhost' IDENTIFIED BY 'hbnb_dev_pwd':
-            GRANT ALL PRIVILEGES ON 'hbnb_dev_db'.* TO 'hbnb_dev'@'localhost':
-                GRANT SELECT ON 'performance_schema'.* TO
-                'hbnb_dev'@'localhost':
-                    FLUSH PRIVILEGES:
+USE `hbnb_dev_db`;
+
+CREATE USER IF NOT EXISTS 'hbnb_dev' @'localhost';
+
+SET
+    PASSWORD FOR 'hbnb_dev' @'localhost' = 'hbnb_dev_pwd';
+
+GRANT ALL PRIVILEGES ON `hbnb_dev_db`.* TO 'hbnb_dev' @'localhost' IDENTIFIED BY 'hbnb_dev_pwd';
+
+GRANT
+SELECT
+    ON `performance_schema`.* TO 'hbnb_dev' @'localhost' IDENTIFIED BY 'hbnb_dev_pwd';
+
+FLUSH PRIVILEGES;
+
