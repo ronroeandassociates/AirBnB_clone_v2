@@ -3,7 +3,7 @@
 from models.base_model import BaseModel, Base
 from models.review import Review
 from models.amenity import Amenity
-from os import getenv
+import os
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
 
@@ -42,16 +42,16 @@ class Place(BaseModel, Base):
     longitude = Column(Float, nullable=True)
     amenity_ids = []
 
-    if getenv('HBNB_TYPE_STORAGE') == "db":
+    try:
+        os.environ['HBNB_TYPE_STORAGE'] == "db"
         reviews = relationship('Review',
                                cascade="all, delete, delete-orphan",
                                backref='place')
         amenities = relationship('Amenity',
                                  secondary="place_amenity",
                                  viewonly=False,
-                                 overlaps="place_amenities"
                                  )
-    else:
+    except Exception:
         @property
         def reviews(self):
             """getter for review list when using filestorage"""
@@ -67,9 +67,7 @@ class Place(BaseModel, Base):
                     if amenity.id in self.amenity_ids]
 
         @amenities.setter
-        def amenities(self, obj):
+        def size(self, obj):
             """adds an ammenity to list"""
-            from models import storage
             if isinstance(obj, Amenity):
                 self.amenity_ids.append(obj.id)
-                storage.new(obj)
