@@ -16,7 +16,6 @@ def hbnb():
     return 'HBNB'
 
 
-
 @app.route('/c/<text>', strict_slashes=False)
 def c_is_fun(text):
     """ Prints a Message when /c is called """
@@ -34,6 +33,7 @@ def python_is_cool(text='is_cool'):
 def is_n_number(n):
     """ Prints a Message when /number is called only if n is an int"""
     return "{:d} is a number".format(n)
+
 
 if __name__ == "__main__":
     """ Main Function """

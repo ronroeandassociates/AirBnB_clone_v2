@@ -6,7 +6,6 @@ app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
 
 
-
 @app.route('/', strict_slashes=False)
 def hello_hbnb():
     """ Prints a Message when / is called """
