@@ -1,25 +1,25 @@
 #!/usr/bin/python3
-""" Starts a Flash Web Application """
+'''Start Flask'''
 
 
-from flask import Flask, render_template
-from models import *
 from models import storage
+from flask import Flask, render_template
+from models.state import State
+
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 
 
-@app.route('/states_list', strict_slashes=False)
-def states_list():
-    """display a HTML page with the states listed in alphabetical order"""
-    states = sorted(list(storage.all("State").values()), key=lambda x: x.name)
-    return render_template('7-states_list.html', states=states)
+@app.route('/states_list')
+def stateList():
+    state = storage.all(State)
+    return render_template("7-states_list.html", States=state)
 
 
 @app.teardown_appcontext
-def teardown_db(exception):
-    """closes the storage on teardown"""
+def teardown(context):
     storage.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(host='0.0.0.0', port='5000')

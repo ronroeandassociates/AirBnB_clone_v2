@@ -4,23 +4,22 @@
     <title>HBNB</title>
   </head>
   <body>
-    {% if (found == 1) %}
-    <h1>State: {{ state }}</h1>
-    <h3>Cities:</h3>
-    <ul>
-      {% for city in array %}
-      <li>{{ city.id }}: <b>{{ city.name }}</b></li>
-      {% endfor %}
-    </ul>
-    {% elif found == 0 %}
+    {% if States is iterable %}
     <h1>States</h1>
-    <ul>
-      {% for state in array %}
-      <li>{{ state.id }}: <b>{{ state.name }}</b></li>
-      {% endfor %}
+    <ul id="States">
+      {% for state in States.values() | sort(attribute='name') %}
+      <li>State: {{ state.id }} <b>{{ state.name }}</b></li>
+      {% endfor %} {% elif States != None %}
+      <h1>State: {{ States.name }}</h1>
+      <h3>Cities:</h3>
+      <ul id="Cities">
+        {% for city in States.cities | sort(attribute="name") %}
+        <li>City: {{ city.id }}: <b>{{ city.name }}</b></li>
+        {% endfor %}
+      </ul>
+      {% else: %}
+      <h1>Not found!</h1>
+      {% endif %}
     </ul>
-    {% else %}
-    <h1>Not found!</h1>
-    {% endif %}
   </body>
 </html>
