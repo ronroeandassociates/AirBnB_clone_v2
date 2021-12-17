@@ -1,34 +1,29 @@
 #!/usr/bin/python3
-""" holds class State"""
-import models
-from models.base_model import BaseModel, Base
-from models.city import City
+""" State Module for HBNB project """
 from os import getenv
-import sqlalchemy
-from sqlalchemy import Column, String, ForeignKey
+from models.base_model import BaseModel, Base
 from sqlalchemy.orm import relationship
+from sqlalchemy import Column, String
+from models.city import City
+import models
+
+# test needed
+# add __tablename__ and link to DBStorage
+# update state task 6
+
 
 class State(BaseModel, Base):
-    """Representation of state """
-    if models.storage_t == "db":
-        __tablename__ = 'states'
-        name = Column(String(128), nullable=False)
-        cities = relationship("City", backref="state",
-                              cascade='all, delete-orphan')
+    """ State class """
+    __tablename__ = 'states'
+    name = Column(String(128), nullable=False)
+    if getenv('HBNB_TYPE_STORAGE') == 'db':
+        cities = relationship('City', cascade="all", backref="State")
     else:
-        name = ""
-
-    def __init__(self, *args, **kwargs):
-        """initializes state"""
-        super().__init__(*args, **kwargs)
-
-    if models.storage_t != "db":
         @property
         def cities(self):
-            """getter for list of city instances related to the state"""
-            city_list = []
-            all_cities = models.storage.all(City)
-            for city in all_cities.values():
-                if city.state_id == self.id:
-                    city_list.append(city)
-            return city_list
+            """returns city list instead"""
+            res = []
+            for thing in models.storage.all(City).values():
+                if thing.state_id == self.id:
+                    res.append(thing)
+            return res
