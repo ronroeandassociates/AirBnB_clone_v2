@@ -1,23 +1,11 @@
+![0x03. AirBnB clone - Web framework](https://github.com/ronroeandassociates/assets/blob/master/images/0x03abnbclone.png)
+
 # 0x03. AirBnB clone - Web framework
 
-## Resources
-### Read or watch:
-
-- What is a Web Framework?
-- A Minimal Application
-- Routing (except “HTTP Methods”)
-- Rendering Templates
-- Synopsis
-- Variables
-- Comments
-- Whitespace Control
-- List of Control Structures (read up to “Call”)
-- Flask
-- Jinja
 ## Learning Objectives
+
 At the end of this project, you are expected to be able to explain to anyone, without the help of Google:
 
-## General
 - What is a Web Framework
 - How to build a web framework with Flask
 - How to define routes in Flask
@@ -27,9 +15,3 @@ At the end of this project, you are expected to be able to explain to anyone, wi
 - How to create a HTML response in Flask by using a template
 - How to create a dynamic template (loops, conditions…)
 - How to display in HTML data from a MySQL database
-
-## Author
-Ron Olsen
-<p align="left">
-<img src="../images/roeHR-01.png" width=10% height=10%>
-</p>
