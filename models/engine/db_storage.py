@@ -34,8 +34,9 @@ class DBStorage:
         db = os.getenv("HBNB_MYSQL_DB")
 
         self.__engine = create_engine(
-            'mysql+mysqldb://{}:{}@{}/{}'.format(user, pwd, host, db),
-            pool_pre_ping=True)
+            f'mysql+mysqldb://{user}:{pwd}@{host}/{db}', pool_pre_ping=True
+        )
+
 
         if os.getenv("HBNB_ENV") == "test":
             Base.matadata.drop_all(bind=self.__engine)
@@ -50,13 +51,13 @@ class DBStorage:
         if cls:
             result = self.__session.query(cls).all()
             for item in result:
-                key = '{}.{}'.format(item.__class__.__name__, item.id)
+                key = f'{item.__class__.__name__}.{item.id}'
                 all_dict[key] = item
         else:
             for x in Base.__subclasses__():
                 result = self.__session.query(x).all()
                 for item in result:
-                    key = '{}.{}'.format(item.__class__.__name__, item.id)
+                    key = f'{item.__class__.__name__}.{item.id}'
                     all_dict[key] = item
         return all_dict
 
