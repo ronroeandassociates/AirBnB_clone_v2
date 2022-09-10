@@ -24,7 +24,7 @@ if __name__ == '__main__':
         """[/c/<text> Displays C followed by the value of the text]
         """
         new_str = text.replace('_', ' ')
-        return "C {}".format(new_str)
+        return f"C {new_str}"
 
     @app.route('/python/', defaults={'text': 'is cool'})
     @app.route('/python/<text>')
@@ -35,7 +35,7 @@ if __name__ == '__main__':
             text (str):Defaults to "is cool".
         """
         new_str = text.replace('_', ' ')
-        return "Python {}".format(new_str)
+        return f"Python {new_str}"
 
     @app.route('/number/<int:n>')
     def display_n(n):
@@ -43,7 +43,7 @@ if __name__ == '__main__':
         Args:
             n ([int]):
         """
-        return "{} is a number".format(n)
+        return f"{n} is a number"
 
     @app.route('/number_template/<int:n>')
     def number_template(n):

@@ -19,7 +19,7 @@ def states_id(id=None):
     states = storage.all(State)
 
     if id:
-        states = states.get('State.{}'.format(id))
+        states = states.get(f'State.{id}')
     return render_template('9-states.html', States=states)
 
 
